@@ -1,0 +1,102 @@
+{
+    "BLACK": [
+        0,
+        0,
+        0
+    ],
+    "RED": [
+        150,
+        0,
+        0
+    ],
+    "GREEN": [
+        0,
+        150,
+        0
+    ],
+    "WHITE": [
+        255,
+        255,
+        255
+    ],
+    "GREY_WHITE": [
+        200,
+        200,
+        200
+    ],
+    "GREY": [
+        100,
+        100,
+        100
+    ],
+    "SENSIBILITY": 0.4,
+    "MENU_EDIT_POS": [
+        1637,
+        918,
+        183,
+        61
+    ],
+    "LONG_BLOCK_MENU_EDIT": 45,
+    "GAP_BLOCK_COL_MENU_EDIT": 7,
+    "POS_BUTTONS_MENU_EDIT": [
+        8,
+        927
+    ],
+    "LIST_BAT_MENU_EDIT": {
+        "0": [
+            "Barrack",
+            "Field",
+            "Granary",
+            "Tower",
+            "Wall",
+            "Grange",
+            "Foundry",
+            "Cannon"
+        ],
+        "-1": [
+            "Gallery",
+            "ExitGallery",
+            "EntranceGallery"
+        ]
+    },
+    "ZOOM": 1,
+    "SIZE_CASE": 50,
+    "SIZE_TEXT": 30,
+    "size_x": 1820,
+    "size_y": 980,
+    "GREY_YELLOW": [
+        232,
+        222,
+        100
+    ],
+    "RED_ORANGE": [
+        235,
+        50,
+        30
+    ],
+    "LIST_JUNCTION_BUILDING": [
+        "Wall",
+        "Gallery",
+        "ExitGallery",
+        "EntranceGallery"
+    ],
+    "DICT_JUNCTIONS": {
+        "Gallery": [
+            "Gallery",
+            "ExitGallery",
+            "EntranceGallery"
+        ],
+        "ExitGallery": [
+            "Gallery",
+            "EntranceGallery"
+        ],
+        "EntranceGallery": [
+            "ExitGallery",
+            "Gallery"
+        ],
+        "Wall": [
+            "Wall",
+            "Tower"
+        ]
+    }
+}

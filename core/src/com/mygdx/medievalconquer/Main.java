@@ -1,32 +1,49 @@
 package com.mygdx.medievalconquer;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.medievalconquer.engine.Game;
 import com.mygdx.medievalconquer.engine.tools.Tools;
 
 public class Main extends ApplicationAdapter {
-	SpriteBatch batch;
-	public Tools t = new Tools();
-	public Game game = new Game(t);
-	
+	public SpriteBatch batch;
+	public ShapeRenderer shape;
+	public Tools t;
+	public Game game;
+	private Viewport viewport;
+	private OrthographicCamera camera;
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
+		this.t = new Tools(0, 0);
+		this.game = new Game(this.t);
+		this.batch = new SpriteBatch();
+		this.shape = new ShapeRenderer();
+		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), this.camera);
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
+		ScreenUtils.clear(0, 0, 0, 1);
+		batch.setProjectionMatrix(this.camera.combined);
+		shape.setProjectionMatrix(this.camera.combined);
 		batch.begin();
-		game.display();
+		game.display(batch, shape);
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
+		shape.dispose();
 	}
 }
