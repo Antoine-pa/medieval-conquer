@@ -24,7 +24,7 @@ public class Game {
         this.layout = new Layout(t);
         this.menu = new Menu(t);
         this.menu.update_buttons(this.layout);
-        this.reload_images();
+        //this.reload_images();
     }
 
     public void display (SpriteBatch batch, ShapeRenderer shape) { //screen (type ?)

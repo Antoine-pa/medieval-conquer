@@ -2,6 +2,8 @@ package com.mygdx.medievalconquer.engine.tools;
 
 import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
 import com.mygdx.medievalconquer.engine.buildings.builds.Barrack;
+import com.mygdx.medievalconquer.engine.buildings.builds.Wall;
+import com.mygdx.medievalconquer.engine.buildings.builds.Tower;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +13,8 @@ public class BuildingFactory {
 
     static {
         BUILDING_CREATORS.put("Barrack", Barrack::new);
+        BUILDING_CREATORS.put("Wall", Wall::new);
+        BUILDING_CREATORS.put("Tower", Tower::new);
     }
 
     public static Building createBuilding(String name, Tools tools, Coords pos) {

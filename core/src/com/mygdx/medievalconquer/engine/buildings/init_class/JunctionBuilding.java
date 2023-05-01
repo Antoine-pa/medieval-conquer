@@ -1,5 +1,7 @@
 package com.mygdx.medievalconquer.engine.buildings.init_class;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
 import com.mygdx.medievalconquer.engine.tools.Tools;
 import com.mygdx.medievalconquer.engine.tools.Coords;
@@ -11,9 +13,10 @@ import java.util.Set;
 import java.util.Arrays;
 
 public class JunctionBuilding extends Building {
-    boolean[] t = {false, false, false, false};
+    boolean[] t;
     public JunctionBuilding(Tools tools, String name, int[] size, Coords pos, int angle, int lvl, int life, String kind, Map<String, Integer> stock, String layer) {
         super(tools, name, size, pos, angle, lvl, life, kind, stock, layer);
+        this.t = new boolean[]{false, false, false, false};
     }
 
     public JunctionBuilding(Tools tools, String name, int[] size, Coords pos, int angle, int lvl, int life, String kind, Map<String, Integer> stock, String layer, boolean[] t) {
@@ -112,6 +115,7 @@ public class JunctionBuilding extends Building {
     public String get_suffix() {
         int s = 0;
         String suffix;
+        System.out.println(this.t);
         for(boolean junc : this.t) {
             if (junc) {
                 s++;
@@ -133,6 +137,7 @@ public class JunctionBuilding extends Building {
     @Override
     public void load() {
         String name = this.name + this.get_suffix();
+        this.img = new Texture(Gdx.files.internal("buildings/" + this.name + "/" + name + ".png"));
         /*
         self.img = t.load_img(f"buildings/{self.name}/{name}.png", int(cst("SIZE_CASE")) * self.size[0], int(cst("SIZE_CASE")) * self.size[1], 255)
         self.img = pygame.transform.rotate(self.img, self.angle)

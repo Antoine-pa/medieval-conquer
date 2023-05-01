@@ -31,7 +31,9 @@ public class Building {
         this.kind = kind;
         this.stock = stock;
         this.layer = layer;
-        this.load();
+        if (this.name != "Wall") {
+            this.load();
+        }
     }
     public boolean display(SpriteBatch batch, float[] pos, boolean alpha) {
         if (this.in_window(pos)) {
@@ -56,7 +58,7 @@ public class Building {
     public void rotate (int angle) {
         this.angle = this.angle + angle;
         this.angle = this.angle%360;
-        this.load();
+        //this.load();
     }
 
 }

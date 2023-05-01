@@ -3,6 +3,7 @@ package com.mygdx.medievalconquer.engine.layout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.medievalconquer.engine.tools.BuildingFactory;
 import com.mygdx.medievalconquer.engine.buildings.builds.Barrack;
 import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
@@ -11,12 +12,10 @@ import com.mygdx.medievalconquer.engine.buildings.init_class.ProductionBuilding;
 import com.mygdx.medievalconquer.engine.buildings.init_class.ResourceTransportation;
 import com.mygdx.medievalconquer.engine.tools.Tools;
 import com.mygdx.medievalconquer.engine.tools.Coords;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Layout {
     public float[] pos = {500, 500};
@@ -43,8 +42,9 @@ public class Layout {
         this.dict_pos_build = new HashMap<>();
         this.dict_pos_build.put("0", new HashMap<>());
         this.dict_pos_build.put("-1", new HashMap<>());
-        Building b = BuildingFactory.createBuilding("Barrack", tools, new Coords(505, 505));
-        this.add_build(b);
+        this.load_layout();
+        //Building b = BuildingFactory.createBuilding("Barrack", tools, new Coords(505, 505));
+        //this.add_build(b);
         //this.add_build(new Building(this.tools, "Barrack", new int[]{1, 1}, new int[]{0, 1}, 0, 1, 100, "defense", new HashMap<>(), "0"));
     }
     public void add_build(Building build) {
@@ -139,10 +139,13 @@ public class Layout {
     }
 
     public void load_layout () {
-        Map<String, Set<JSONObject>> lyt = (Map<String, Set<JSONObject>>) this.tools.layout;
-        for(Map.Entry<String, Set<JSONObject>> l : lyt.entrySet()) {
-            for(JSONObject build: l.getValue()) {
-                //this.add_build();
+        Map<String, ArrayList<Map>> lyt = (Map) this.tools.layout.toMap();
+        for(Map.Entry<String, ArrayList<Map>> l : lyt.entrySet()) {
+            for(int i = 0; i < l.getValue().size(); i++) {
+                Map build = (Map) l.getValue().get(i);
+                String name = (String) build.get("name");
+                Coords coords = new Coords((int) ((ArrayList) build.get("pos")).get(0), (int) ((ArrayList) build.get("pos")).get(1));
+                this.add_build(BuildingFactory.createBuilding(name, this.tools, coords));
             }
         }
     }
