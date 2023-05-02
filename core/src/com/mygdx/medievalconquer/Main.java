@@ -11,7 +11,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.medievalconquer.engine.Game;
+import com.mygdx.medievalconquer.engine.tools.Picture;
 import com.mygdx.medievalconquer.engine.tools.Tools;
+
+import java.util.Map;
 
 public class Main extends ApplicationAdapter {
 	public SpriteBatch batch;
@@ -37,17 +40,17 @@ public class Main extends ApplicationAdapter {
 		ScreenUtils.clear(0, 0, 0, 1);
 		batch.setProjectionMatrix(this.camera.combined);
 		shape.setProjectionMatrix(this.camera.combined);
-		batch.begin();
 		game.display(batch, shape);
-		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
 		shape.dispose();
-		for(Building build: this.game.layout.list_build.get(this.game.layout.layer)) {
-			build.img.dispose();
+		for(Map.Entry<String, Map<String, Texture>> m: Picture.get().entrySet()) {
+			for(Map.Entry<String, Texture> texture: m.getValue().entrySet()) {
+				texture.getValue().dispose();
+			}
 		}
 	}
 }

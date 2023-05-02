@@ -6,11 +6,7 @@ import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
 import com.mygdx.medievalconquer.engine.tools.Tools;
 import com.mygdx.medievalconquer.engine.tools.Coords;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.Arrays;
+import java.util.*;
 
 public class JunctionBuilding extends Building {
     boolean[] t;
@@ -115,7 +111,6 @@ public class JunctionBuilding extends Building {
     public String get_suffix() {
         int s = 0;
         String suffix;
-        System.out.println(this.t);
         for(boolean junc : this.t) {
             if (junc) {
                 s++;
@@ -134,18 +129,6 @@ public class JunctionBuilding extends Building {
         }
         return suffix;
     }
-    @Override
-    public void load() {
-        String name = this.name + this.get_suffix();
-        this.img = new Texture(Gdx.files.internal("buildings/" + this.name + "/" + name + ".png"));
-        /*
-        self.img = t.load_img(f"buildings/{self.name}/{name}.png", int(cst("SIZE_CASE")) * self.size[0], int(cst("SIZE_CASE")) * self.size[1], 255)
-        self.img = pygame.transform.rotate(self.img, self.angle)
-        self.img_alpha = t.load_img(f"buildings/{self.name}/{name}.png", int(cst("SIZE_CASE"))*self.size[0] , int(cst("SIZE_CASE"))*self.size[1], 32)
-        self.img_alpha = pygame.transform.rotate(self.img_alpha, self.angle)
-        */
-    }
-
     public void rotate_junction() {
         int s = 0;
         String suffix;
@@ -154,6 +137,7 @@ public class JunctionBuilding extends Building {
                 s++;
             }
         }
+        System.out.println(s);
         if (s == 1){
             this.angle = Arrays.asList(this.t).indexOf(true)*90;
         }
@@ -173,6 +157,12 @@ public class JunctionBuilding extends Building {
                 }
             }
         }
-        this.load();
+    }
+    public void set_junctions(ArrayList<Boolean> t) {
+        int i = 0;
+        for(boolean j: t) {
+            this.t[i] = j;
+            i++;
+        }
     }
 }

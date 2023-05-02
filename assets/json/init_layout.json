@@ -60,10 +60,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    1,
-                    0,
-                    1,
-                    0
+                    true,
+                    false,
+                    true,
+                    false
                 ]
             }
         },
@@ -79,10 +79,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    0,
-                    1,
-                    0,
-                    1
+                    false,
+                    true,
+                    false,
+                    true
                 ]
             }
         },
@@ -98,10 +98,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    1,
-                    0,
-                    1,
-                    0
+                    true,
+                    false,
+                    true,
+                    false
                 ]
             }
         },
@@ -117,10 +117,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    0,
-                    1,
-                    0,
-                    1
+                    false,
+                    true,
+                    false,
+                    true
                 ]
             }
         },
@@ -136,10 +136,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    0,
-                    1,
-                    0,
-                    1
+                    false,
+                    true,
+                    false,
+                    true
                 ]
             }
         },
@@ -155,10 +155,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    0,
-                    1,
-                    0,
-                    1
+                    false,
+                    true,
+                    false,
+                    true
                 ]
             }
         },
@@ -174,10 +174,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    1,
-                    0,
-                    1,
-                    0
+                    true,
+                    false,
+                    true,
+                    false
                 ]
             }
         },
@@ -193,10 +193,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    1,
-                    0,
-                    1,
-                    0
+                    true,
+                    false,
+                    true,
+                    false
                 ]
             }
         },
@@ -212,10 +212,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    0,
-                    1,
-                    0,
-                    1
+                    false,
+                    true,
+                    false,
+                    true
                 ]
             }
         },
@@ -231,10 +231,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    0,
-                    1,
-                    0,
-                    1
+                    false,
+                    true,
+                    false,
+                    true
                 ]
             }
         },
@@ -250,10 +250,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    1,
-                    0,
-                    1,
-                    0
+                    true,
+                    false,
+                    true,
+                    false
                 ]
             }
         },
@@ -269,10 +269,10 @@
             "stock": {},
             "other": {
                 "t": [
-                    1,
-                    0,
-                    1,
-                    0
+                    true,
+                    false,
+                    true,
+                    false
                 ]
             }
         }

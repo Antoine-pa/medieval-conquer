@@ -68,9 +68,6 @@ public class Layout {
         if (build.kind == "production") {
             ((ProductionBuilding) build).start_production = true;
         }
-        if (build instanceof JunctionBuilding) {
-            ((JunctionBuilding) build).load();
-        }
     }
 
     public int check_pos (Building build, Map<String, Map<Coords, Building>> edit_add_tamp) {
@@ -104,6 +101,7 @@ public class Layout {
             }
         }
         shape.end();
+        batch.begin();
         if (this.alpha & this.layer == "-1") {
             for(int y = (int) this.pos[1]-10; y < this.pos[1] + this.tools.get_cst_value("size_y")/this.tools.get_cst_value("SIZE_CASE"); y++) {
                 for(int x = (int) this.pos[0]-10; x < this.pos[0] + this.tools.get_cst_value("size_x")/this.tools.get_cst_value("SIZE_CASE"); x++) {
@@ -128,6 +126,7 @@ public class Layout {
             }
         }
         builds.clear();
+        batch.end();
         //suite
     }
 
@@ -145,14 +144,14 @@ public class Layout {
                 Map build = (Map) l.getValue().get(i);
                 String name = (String) build.get("name");
                 Coords coords = new Coords((int) ((ArrayList) build.get("pos")).get(0), (int) ((ArrayList) build.get("pos")).get(1));
-                this.add_build(BuildingFactory.createBuilding(name, this.tools, coords));
-            }
-        }
-    }
-    public void reload_images () {
-        for(Map.Entry<String, HashSet<Building>> l: this.list_build.entrySet()) {
-            for(Building build: l.getValue()) {
-                build.load();
+                Building b = BuildingFactory.createBuilding(name, this.tools, coords);
+                if (b instanceof JunctionBuilding) {
+                    ((JunctionBuilding) b).set_junctions(((ArrayList) ((Map) build.get("other")).get("t")));
+                    b.angle = (int) build.get("angle");
+                    b.lvl = (int) build.get("lvl");
+                    b.life = (int) build.get("life");
+                }
+                this.add_build(b);
             }
         }
     }

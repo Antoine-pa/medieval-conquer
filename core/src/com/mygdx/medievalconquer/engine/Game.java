@@ -33,12 +33,6 @@ public class Game {
         }
         //this.menu.display(this.layout);
     }
-
-    public void reload_images () {
-        this.layout.reload_images();
-        //reload img mem_tamp
-    }
-
     public void shifting (int x, int y) {
         this.layout.pos[0] += x;
         this.layout.pos[1] += y;
