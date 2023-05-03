@@ -7,6 +7,6 @@ import com.mygdx.medievalconquer.engine.tools.Coords;
 import java.util.HashMap;
 public class Barrack extends Building {
     public Barrack (Tools tools, Coords pos) {
-        super(tools, "Barrack", new int[]{2, 2}, pos, 0, 1, 100, "defense", new HashMap<String, Integer>(), "0");
+        super(tools, "Barrack", new int[]{2, 2}, pos, 0, 1, 100, "defense", new HashMap<>(), "0");
     }
 }

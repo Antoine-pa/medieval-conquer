@@ -6,7 +6,6 @@ import com.mygdx.medievalconquer.engine.tools.Coords;
 import com.mygdx.medievalconquer.engine.tools.Picture;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.Gdx;
 
 import java.util.Map;
 public class Building {
@@ -39,7 +38,7 @@ public class Building {
                 //
             }
             else {
-                int size = this.tools.get_cst_value("SIZE_CASE");
+                int size = this.tools.int_cst.get("SIZE_CASE");
                 Texture texture = Picture.get(this);
                 batch.draw(texture, this.pos.x*size-pos[0]*size, this.pos.y*size-pos[1]*size, this.size[0]*size/2, this.size[1]*size/2, this.size[0]*size, this.size[1]*size, 1, 1, this.angle, 0, 0, texture.getWidth(), texture.getWidth(), false, false);
             }
@@ -49,7 +48,7 @@ public class Building {
         return false;
     }
     public boolean in_window(float[] pos) {
-        return (pos[0] <= this.pos.x && this.pos.x <= this.tools.get_cst_value("size_x")/this.tools.get_cst_value("SIZE_CASE")+pos[0] && pos[1] <= this.pos.y && this.pos.y <= this.tools.get_cst_value("size_y")/this.tools.get_cst_value("SIZE_CASE")+pos[1]);
+        return (pos[0] <= this.pos.x && this.pos.x <= this.tools.int_cst.get("size_x")/this.tools.int_cst.get("SIZE_CASE")+pos[0] && pos[1] <= this.pos.y && this.pos.y <= this.tools.int_cst.get("size_y")/this.tools.int_cst.get("SIZE_CASE")+pos[1]);
     }
     public void rotate (int angle) {
         this.angle = this.angle + angle;

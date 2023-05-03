@@ -3,17 +3,14 @@ package com.mygdx.medievalconquer.engine.layout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.medievalconquer.engine.tools.BuildingFactory;
-import com.mygdx.medievalconquer.engine.buildings.builds.Barrack;
 import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
 import com.mygdx.medievalconquer.engine.buildings.init_class.JunctionBuilding;
 import com.mygdx.medievalconquer.engine.buildings.init_class.ProductionBuilding;
 import com.mygdx.medievalconquer.engine.buildings.init_class.ResourceTransportation;
+import com.mygdx.medievalconquer.engine.tools.Colors;
 import com.mygdx.medievalconquer.engine.tools.Tools;
 import com.mygdx.medievalconquer.engine.tools.Coords;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.*;
 
@@ -81,30 +78,30 @@ public class Layout {
     }
 
     public void display (SpriteBatch batch, ShapeRenderer shape) {
-        int[] color1;
-        int[] color2;
+        Color color1;
+        Color color2;
         if (this.layer == "0") {
-            color1 = this.tools.get_cst_array("WHITE");
-            color2 = this.tools.get_cst_array("BLACK");
+            color1 = Colors.white;
+            color2 = Colors.black;
         }
         else {
-            color1 = this.tools.get_cst_array("BLACK");
-            color2 = this.tools.get_cst_array("WHITE");
+            color1 = Colors.black;
+            color2 = Colors.white;
         }
         this.tools.fill(color1);
         shape.begin(ShapeRenderer.ShapeType.Line);
-        shape.setColor(Color.GRAY);
-        for(float x = 0; x<=this.tools.get_cst_value("size_x")+ this.tools.get_cst_value("SIZE_CASE"); x = x+this.tools.get_cst_value("SIZE_CASE")) {
-            shape.line(x-this.pos[0]%1* tools.get_cst_value("SIZE_CASE"), 0, x-this.pos[0]%1* tools.get_cst_value("SIZE_CASE"), tools.get_cst_value("size_y"));
-            for(float y = 0; y<=this.tools.get_cst_value("size_y")+ this.tools.get_cst_value("SIZE_CASE"); y = y+this.tools.get_cst_value("SIZE_CASE")) {
-                shape.line(0, y-this.pos[1]%1* tools.get_cst_value("SIZE_CASE"), tools.get_cst_value("size_x"), y-this.pos[1]%1* tools.get_cst_value("SIZE_CASE"));
+        shape.setColor(color2);
+        for(float x = 0; x<=this.tools.int_cst.get("size_x")+ this.tools.int_cst.get("SIZE_CASE"); x = x+this.tools.int_cst.get("SIZE_CASE")) {
+            shape.line(x-this.pos[0]%1* tools.int_cst.get("SIZE_CASE"), 0, x-this.pos[0]%1* tools.int_cst.get("SIZE_CASE"), tools.int_cst.get("size_y"));
+            for(float y = 0; y<=this.tools.int_cst.get("size_y")+ this.tools.int_cst.get("SIZE_CASE"); y = y+this.tools.int_cst.get("SIZE_CASE")) {
+                shape.line(0, y-this.pos[1]%1* tools.int_cst.get("SIZE_CASE"), tools.int_cst.get("size_x"), y-this.pos[1]%1* tools.int_cst.get("SIZE_CASE"));
             }
         }
         shape.end();
         batch.begin();
         if (this.alpha & this.layer == "-1") {
-            for(int y = (int) this.pos[1]-10; y < this.pos[1] + this.tools.get_cst_value("size_y")/this.tools.get_cst_value("SIZE_CASE"); y++) {
-                for(int x = (int) this.pos[0]-10; x < this.pos[0] + this.tools.get_cst_value("size_x")/this.tools.get_cst_value("SIZE_CASE"); x++) {
+            for(int y = (int) this.pos[1]-10; y < this.pos[1] + this.tools.int_cst.get("size_y")/this.tools.int_cst.get("SIZE_CASE"); y++) {
+                for(int x = (int) this.pos[0]-10; x < this.pos[0] + this.tools.int_cst.get("size_x")/this.tools.int_cst.get("SIZE_CASE"); x++) {
                     Coords coords = new Coords(x, y);
                     if (this.dict_pos_build.get("0").containsKey(coords)) {
                         this.dict_pos_build.get("0").get(coords).display(batch, this.pos, true);
@@ -113,8 +110,8 @@ public class Layout {
             }
         }
         Set<Building> builds = new HashSet<>();
-        for(int y = (int) this.pos[1]-10; y < this.pos[1] + this.tools.get_cst_value("size_y")/this.tools.get_cst_value("SIZE_CASE"); y++) {
-            for(int x = (int) this.pos[0]-10; x < this.pos[0] + this.tools.get_cst_value("size_x")/this.tools.get_cst_value("SIZE_CASE"); x++) {
+        for(int y = (int) this.pos[1]-10; y < this.pos[1] + this.tools.int_cst.get("size_y")/this.tools.int_cst.get("SIZE_CASE")+2; y++) {
+            for(int x = (int) this.pos[0]-10; x < this.pos[0] + this.tools.int_cst.get("size_x")/this.tools.int_cst.get("SIZE_CASE")+2; x++) {
                 Coords coords = new Coords(x, y);
                 if (this.dict_pos_build.get(this.layer).containsKey(coords)) {
                     Building b = this.dict_pos_build.get(this.layer).get(coords);
@@ -132,8 +129,8 @@ public class Layout {
 
     public Coords get_case (int[] pos) {
         Coords c = new Coords(0, 0);
-        c.x = (pos[0]+((int) this.pos[0]*this.tools.get_cst_value("SIZE_CASE")))/this.tools.get_cst_value("SIZE_CASE");
-        c.y = (pos[1]+((int) this.pos[1]*this.tools.get_cst_value("SIZE_CASE")))/this.tools.get_cst_value("SIZE_CASE");
+        c.x = (pos[0]+((int) this.pos[0]*this.tools.int_cst.get("SIZE_CASE")))/this.tools.int_cst.get("SIZE_CASE");
+        c.y = (pos[1]+((int) this.pos[1]*this.tools.int_cst.get("SIZE_CASE")))/this.tools.int_cst.get("SIZE_CASE");
         return c;
     }
 
@@ -179,13 +176,10 @@ public class Layout {
         }
     }
 
-    public boolean zoom (int z) {
-        if((z < 0 && this.tools.get_cst_value("ZOOM") >= 0.2) | (z > 0 && this.tools.get_cst_value("ZOOM") <= 1.9)) {
-            int old_zoom = this.tools.get_cst_value("ZOOM");
-            this.tools.set_cst("ZOOM", (int) (this.tools.get_cst_value("ZOOM") + z/10));
-            this.tools.set_cst("SIZE_CASE", (int) (1/this.tools.get_cst_value("ZOOM")*this.tools.get_cst_value("SIZE_CASE")/(1/old_zoom)));
-            return true;
-        }
-        return false;
+    public void zoom (float z) {
+        float new_zoom = this.tools.float_cst.get("ZOOM") + z/10;
+        new_zoom = Float.max(Float.min(new_zoom, 1.7f), 0.5f);
+        this.tools.set_cst("ZOOM", new_zoom);
+        this.tools.set_cst("SIZE_CASE", (int) ((1/new_zoom)*this.tools.int_cst.get("INIT_SIZE_CASE")));
     }
 }

@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Game {
     public Tools t;
@@ -24,7 +23,6 @@ public class Game {
         this.layout = new Layout(t);
         this.menu = new Menu(t);
         this.menu.update_buttons(this.layout);
-        //this.reload_images();
     }
 
     public void display (SpriteBatch batch, ShapeRenderer shape) { //screen (type ?)

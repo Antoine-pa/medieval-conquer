@@ -4,7 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
+import com.mygdx.medievalconquer.engine.inputs.Inputs;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -19,6 +19,7 @@ import java.util.Map;
 public class Main extends ApplicationAdapter {
 	public SpriteBatch batch;
 	public ShapeRenderer shape;
+	public Inputs inputs;
 	public Tools t;
 	public Game game;
 	private Viewport viewport;
@@ -26,13 +27,15 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		this.t = new Tools(0, 0);
+		this.t = new Tools(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.game = new Game(this.t);
 		this.batch = new SpriteBatch();
 		this.shape = new ShapeRenderer();
 		this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), this.camera);
+		this.inputs = new Inputs(this);
+		Gdx.input.setInputProcessor(this.inputs);
 	}
 
 	@Override

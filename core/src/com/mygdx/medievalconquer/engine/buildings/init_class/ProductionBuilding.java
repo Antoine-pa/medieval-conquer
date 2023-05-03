@@ -1,6 +1,5 @@
 package com.mygdx.medievalconquer.engine.buildings.init_class;
 
-import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
 import com.mygdx.medievalconquer.engine.tools.Tools;
 import com.mygdx.medievalconquer.engine.tools.Coords;
 

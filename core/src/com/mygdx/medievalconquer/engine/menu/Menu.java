@@ -1,13 +1,11 @@
 package com.mygdx.medievalconquer.engine.menu;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.medievalconquer.engine.layout.Layout;
-import com.mygdx.medievalconquer.engine.tools.Button;
-import com.mygdx.medievalconquer.engine.tools.Tools;
-import com.mygdx.medievalconquer.engine.tools.Coords;
+import com.mygdx.medievalconquer.engine.tools.*;
 import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
 import com.mygdx.medievalconquer.engine.buildings.init_class.JunctionBuilding;
-import com.mygdx.medievalconquer.engine.tools.BuildingFactory;
 
 import java.util.*;
 
@@ -26,16 +24,16 @@ public class Menu {
 
     public void click (int[] pos, Layout layout) {
         if (this.action == "edit-add") { //si il ajoute des bâtiments
-            int[] pos_menu = {Math.max(0, this.tools.get_cst_array("MENU_EDIT_POS")[0] - this.tools.get_cst_dict("LIST_BUILD_MENU_EDIT").get(layout.layer).length * this.tools.get_cst_array("MENU_EDIT_POS")[3]), this.tools.get_cst_array("MENU_EDIT_POS")[1]};
+            int[] pos_menu = {Math.max(0, this.tools.array_cst.get("MENU_EDIT_POS")[0] - Const.LIST_BUILD_MENU_EDIT.get(layout.layer).length * this.tools.array_cst.get("MENU_EDIT_POS")[3]), this.tools.array_cst.get("MENU_EDIT_POS")[1]};
             if (pos_menu[0] < pos[0] && pos_menu[ 1] <pos[1]) { //si le clic est dans le menu d 'edition
-                if (pos[0] < this.tools.get_cst_array("MENU_EDIT_POS")[0]) { //si il click dans les bâtiments et non dans les bouttons
+                if (pos[0] < this.tools.array_cst.get("MENU_EDIT_POS")[0]) { //si il click dans les bâtiments et non dans les bouttons
                     //sélection bâtiment
                     pos[0] = pos[0] - pos_menu[0];
                     pos[1] = pos[1] - pos_menu[1];
-                    int coord_case = pos[0] / this.tools.get_cst_array("MENU_EDIT_POS")[3]; //on calcul les coordonnées de la case
-                    int index = this.tools.get_cst_dict("LIST_BUILD_MENU_EDIT").get(layout.layer).length - coord_case - 1 ; //on calcul l 'index de la case dans la liste des bâtiments
-                    if (this.build_tamp != this.tools.get_cst_dict("LIST_BUILD_MENU_EDIT").get(layout.layer)[index]) {
-                        this.build_tamp = this.tools.get_cst_dict("LIST_BUILD_MENU_EDIT").get(layout.layer)[index]; //on ajoute le bâtiment à la mémoire tampon dans la section réservé au bâtiment séléctinné pour de la construction
+                    int coord_case = pos[0] / this.tools.array_cst.get("MENU_EDIT_POS")[3]; //on calcul les coordonnées de la case
+                    int index = Const.LIST_BUILD_MENU_EDIT.get(layout.layer).length - coord_case - 1 ; //on calcul l 'index de la case dans la liste des bâtiments
+                    if (this.build_tamp != Const.LIST_BUILD_MENU_EDIT.get(layout.layer)[index]) {
+                        this.build_tamp = Const.LIST_BUILD_MENU_EDIT.get(layout.layer)[index]; //on ajoute le bâtiment à la mémoire tampon dans la section réservé au bâtiment séléctinné pour de la construction
                     }
                     else {
                         this.build_tamp = "";
@@ -216,10 +214,10 @@ public class Menu {
         //
         if (this.action == "edit-add") {
             //
-            int[] pos_menu = {this.tools.get_cst_value("size_x") - 4*this.tools.get_cst_array("MENU_EDIT_POS")[3], this.tools.get_cst_value("size_y") - (this.res_tamp.size()+1)*this.tools.get_cst_array("MENU_EDIT_POS")[3], 4*this.tools.get_cst_array("MENU_EDIT_POS")[3], this.res_tamp.size()*this.tools.get_cst_array("MENU_EDIT_POS")[3]};
+            int[] pos_menu = {this.tools.int_cst.get("size_x") - 4*this.tools.array_cst.get("MENU_EDIT_POS")[3], this.tools.int_cst.get("size_y") - (this.res_tamp.size()+1)*this.tools.array_cst.get("MENU_EDIT_POS")[3], 4*this.tools.array_cst.get("MENU_EDIT_POS")[3], this.res_tamp.size()*this.tools.array_cst.get("MENU_EDIT_POS")[3]};
             Map<String, Integer> check = new HashMap<>();
-            for(int i = 0; i<this.tools.get_cst_dict("LIST_BUILD_MENU_EDIT").get(layout.layer).length; i++) {
-                String build = this.tools.get_cst_dict("LIST_BUILD_MENU_EDIT").get(layout.layer)[i];
+            for(int i = 0; i < Const.LIST_BUILD_MENU_EDIT.get(layout.layer).length; i++) {
+                String build = Const.LIST_BUILD_MENU_EDIT.get(layout.layer)[i];
                 if (this.build_tamp == build) {
                     //
                     Map<String, Integer> cost = this.tools.get_cost("build", 1);
@@ -227,20 +225,20 @@ public class Menu {
                     check = this.tools.check_stock(cost, this.res_tamp);
                     int j = 0;
                     for(Map.Entry<String, Integer> res: cost.entrySet()) {
-                        int[] color;
+                        Color color;
                         if (check.containsKey(res.getKey())) {
-                            color = this.tools.get_cst_array("RED");
+                            color = Colors.red;
                         }
                         else {
-                            color = this.tools.get_cst_array("BLACK");
+                            color = Colors.black;
                         }
-                        int[] pos = {pos_menu[0] - pos_menu[2] + this.tools.get_cst_array("MENU_EDIT_POS")[3] / 4, this.tools.get_cst_array("MENU_EDIT_POS")[1] - cost.size() * (this.tools.get_cst_array("MENU_EDIT_POS")[3]) + j * this.tools.get_cst_array("MENU_EDIT_POS")[3] + this.tools.get_cst_array("MENU_EDIT_POS")[3] / 4};
+                        int[] pos = {pos_menu[0] - pos_menu[2] + this.tools.array_cst.get("MENU_EDIT_POS")[3] / 4, this.tools.array_cst.get("MENU_EDIT_POS")[1] - cost.size() * (this.tools.array_cst.get("MENU_EDIT_POS")[3]) + j * this.tools.array_cst.get("MENU_EDIT_POS")[3] + this.tools.array_cst.get("MENU_EDIT_POS")[3] / 4};
                         this.tools.text(res.getKey()+" : "+String.valueOf(res.getValue()), color, pos, 20);
                         j++;
                     }
                 }
                 String b = build;
-                if (Arrays.stream(this.tools.get_cst_array_string("LIST_JUNCTION_BUILDING")).anyMatch(build::equals)) {
+                if (Arrays.stream(Const.LIST_JUNCTION_BUILDING).anyMatch(build::equals)) {
                     build = build+"2_0";
                 }
                 //
@@ -250,14 +248,14 @@ public class Menu {
                 //
                 int i = 0;
                 for(Map.Entry<String, Integer> res: this.res_tamp.entrySet()) {
-                    int[] color;
+                    Color color;
                     if (!check.isEmpty() && check.containsKey(res.getKey())) {
-                        color = this.tools.get_cst_array("RED");
+                        color = Colors.red;
                     }
                     else {
-                        color = this.tools.get_cst_array("BLACK");
+                        color = Colors.black;
                     }
-                    int[] pos = {pos_menu[0]+this.tools.get_cst_array("MENU_EDIT_POS")[3]/4, pos_menu[1]+i*this.tools.get_cst_array("MENU_EDIT_POS")[3]+this.tools.get_cst_array("MENU_EDIT_POS")[3]/4};
+                    int[] pos = {pos_menu[0]+this.tools.array_cst.get("MENU_EDIT_POS")[3]/4, pos_menu[1]+i*this.tools.array_cst.get("MENU_EDIT_POS")[3]+this.tools.array_cst.get("MENU_EDIT_POS")[3]/4};
                     String text = res.getKey() + " : " + String.valueOf(res.getValue()) + "/" + String.valueOf(this.tools.get_res(res.getKey()).get("stock"));
                     this.tools.text(text, color, pos, 20);
                     i++;
@@ -271,14 +269,14 @@ public class Menu {
         int i = 0;
         for(Map.Entry<String, Map<String, Integer>> res: resources.entrySet()) {
             float ratio = res.getValue().get("stock") / res.getValue().get("max");
-            int[] pos = new int[]{this.tools.get_cst_value("size_x")/2-this.tools.get_cst_value("size_x")/16, this.tools.get_cst_value("size_y")*(3*resources.size()+2+6*i)/(12*resources.size())};
-            int[] size = new int[]{this.tools.get_cst_value("size_x")/8, this.tools.get_cst_value("size_y")/(6*resources.size())};
-            this.tools.barre(pos, size, ratio, this.tools.get_cst_array("RED"));
-            pos = new int[]{this.tools.get_cst_value("size_x")/4+this.tools.get_cst_value("size_x")/16, this.tools.get_cst_value("size_y")/4+this.tools.get_cst_value("size_y")/(6*resources.size())+i*this.tools.get_cst_value("size_y")/(2*resources.size())};
-            this.tools.text(res.getKey(), this.tools.get_cst_array("BLACK"), pos, this.tools.get_cst_value("size_y")/(6*resources.size()));
-            pos = new int[]{this.tools.get_cst_value("size_x")/2+this.tools.get_cst_value("size_x")/8, this.tools.get_cst_value("size_y")/4+this.tools.get_cst_value("size_y")/(6*resources.size())+i*this.tools.get_cst_value("size_y")/(2*resources.size())};
+            int[] pos = new int[]{this.tools.int_cst.get("size_x")/2-this.tools.int_cst.get("size_x")/16, this.tools.int_cst.get("size_y")*(3*resources.size()+2+6*i)/(12*resources.size())};
+            int[] size = new int[]{this.tools.int_cst.get("size_x")/8, this.tools.int_cst.get("size_y")/(6*resources.size())};
+            this.tools.progress_bar(pos, size, ratio, Colors.red);
+            pos = new int[]{this.tools.int_cst.get("size_x")/4+this.tools.int_cst.get("size_x")/16, this.tools.int_cst.get("size_y")/4+this.tools.int_cst.get("size_y")/(6*resources.size())+i*this.tools.int_cst.get("size_y")/(2*resources.size())};
+            this.tools.text(res.getKey(), Colors.black, pos, this.tools.int_cst.get("size_y")/(6*resources.size()));
+            pos = new int[]{this.tools.int_cst.get("size_x")/2+this.tools.int_cst.get("size_x")/8, this.tools.int_cst.get("size_y")/4+this.tools.int_cst.get("size_y")/(6*resources.size())+i*this.tools.int_cst.get("size_y")/(2*resources.size())};
             String text = String.valueOf(res.getValue().get("stock")) + "/" + String.valueOf(res.getValue().get("max")) + " ("+ String.valueOf(ratio*100)+"%)";
-            this.tools.text(text, this.tools.get_cst_array("BLACK"), pos, this.tools.get_cst_value("size_y")/(6*resources.size()));
+            this.tools.text(text, Colors.black, pos, this.tools.int_cst.get("size_y")/(6*resources.size()));
             i++;
         }
     }

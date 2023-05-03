@@ -1,8 +1,6 @@
 package com.mygdx.medievalconquer.engine.buildings.init_class;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
+import com.mygdx.medievalconquer.engine.tools.Const;
 import com.mygdx.medievalconquer.engine.tools.Tools;
 import com.mygdx.medievalconquer.engine.tools.Coords;
 
@@ -92,7 +90,7 @@ public class JunctionBuilding extends Building {
             pos.add(new Coords(this.pos.x, this.pos.y -1+x*2));
         }
         HashSet<Building> list_build = new HashSet<>();
-        String[] junctions = this.tools.get_cst_dict("DICT_JUNCTIONS").get(this.name);
+        String[] junctions = Const.DICT_JUNCTIONS.get(this.name);
         for(Coords p: pos) {
             for(Map<Coords, Building> dict_pos_build: list_dict_pos_build) {
                 if(dict_pos_build.containsKey(p)) {

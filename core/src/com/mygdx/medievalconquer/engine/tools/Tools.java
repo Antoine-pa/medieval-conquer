@@ -1,15 +1,14 @@
 package com.mygdx.medievalconquer.engine.tools;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
 
+import java.math.BigDecimal;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.File;
@@ -17,16 +16,17 @@ import org.apache.commons.io.FileUtils;
 
 public class Tools {
     public String path_json = "json/";
-    public String path_assets = "";
     private JSONObject cost;
-    private JSONObject cst;
     public JSONObject layout;
     private JSONObject prod;
     private JSONObject res;
+    public Map<String, Float> float_cst = new HashMap<>();
+    public Map<String, Integer> int_cst = new HashMap<>();
+    public Map<String, int[]> array_cst = new HashMap<>();
     public Tools(int size_x, int size_y) {
+        this.set_all_cst(size_x, size_y);
         try {
             this.cost = this.load_cost();
-            this.cst = this.load_cst();
             this.layout = this.load_layout();
             this.prod = this.load_prod();
             this.res = this.load_res();
@@ -35,68 +35,23 @@ public class Tools {
             System.out.println("invalid file name"+e.getMessage());
         }
     }
-
     public void add_new_res(String name, int maxi, int value) {
-
     }
-
-    public static void barre (int[] pos, int[] size, float ratio, int[] color) {
-
+    public static void progress_bar (int[] pos, int[] size, float ratio, Color color) {
     }
     public Map<String, Integer> check_stock(Map<String, Integer> resources, Map<String, Integer> resources2) {
         Map<String, Integer> r = new HashMap();
         for (Map.Entry res : resources.entrySet()) {
-            /*
-            if (res.getValue() + resources2.get(res.getKey()) > 0) {
 
-            }
-            System.out.println("clé: "+mapentry.getKey()
-                    + " | valeur: " + mapentry.getValue());
-            */
         }
         return r;
     }
-    public float[] color_to_float(int[] color) {
-        return new float[]{color[0]/256, color[1]/256, color[2]/256};
+    public static void fill(Color color) {
+        ScreenUtils.clear(color);
     }
-    public void display_img(SpriteBatch batch, Texture img, int[] pos, int[] size) {
-        int s = this.get_cst_value("SIZE_CASE");
-        batch.draw(img, pos[0]*s, pos[1]*s, size[0]*s, size[1]*s);
-    }
-    public static void fill(int[] color) {
-        Gdx.gl.glClearColor(color[0]/255, color[1]/255, color[2]/255, 1);
-    }
-    public static void fill(int[] color, int alpha) {
-        Gdx.gl.glClearColor(color[0]/255, color[1]/255, color[2]/255, alpha);
-    }
-
     public Map<String, Integer> get_cost(String name, int lvl){
         Map<String, Integer> cost = ((Map) ((JSONObject) ((JSONObject) this.cost.get(name)).get(String.valueOf(lvl))).toMap());
         return cost;
-    }
-
-    public int get_cst_value(String name) {
-        int value = (int) this.cst.get(name);
-        return value;
-    }
-
-    public int[] get_cst_array(String name) {
-        JSONArray array = ((JSONArray) this.cst.get(name));
-        int[] ar = new int[array.length()];
-        for(int i = 0; i<array.length(); i++) {
-            ar[i] = (int) array.get(i);
-        }
-        return ar;
-    }
-
-    public String[] get_cst_array_string(String name) {
-        String[] array = (String[]) this.cst.get(name);
-        return array;
-    }
-
-    public Map<String, String[]> get_cst_dict(String name) {
-        Map<String, String[]> dict = (Map) ((JSONObject) this.cst.get(name)).toMap();
-        return dict;
     }
     private JSONObject get_json(String name) throws IOException {
         return new JSONObject(FileUtils.readFileToString(new File(this.path_json+name), "utf-8"));
@@ -113,19 +68,12 @@ public class Tools {
         int time = ((int) ((JSONObject) ((JSONObject) this.prod.get(build.name)).get(String.valueOf(build.lvl))).get("time"));
         return time;
     }
-
     public Map<String, Map<String, Integer>> get_res() {
         return (Map) this.res;
     }
     public Map<String, Integer> get_res(String name) {
         Map<String, Integer> res = ((Map) ((JSONObject) this.res.get(name)).toMap());
         return res;
-    }
-    public void load_img(String name, int x, int y) throws IOException {
-
-    }
-    public void load_img(String name, int x, int y, int alpha) throws IOException {
-
     }
     private JSONObject load_cost() throws IOException {
         return this.get_json("cost.json");
@@ -143,25 +91,34 @@ public class Tools {
         return this.get_json("resources.json");
     }
     public void set_all_cst(int size_x, int size_y) {
-
+        this.int_cst.put("size_x", size_x);
+        this.int_cst.put("size_y", size_y);
+        this.float_cst.put("SENSIBILITY", 0.4f);
+        this.float_cst.put("ZOOM", 1f);
+        this.array_cst.put("MENU_EDIT_POS", new int[]{size_x-3*size_y/16, 15*size_y/16, 3*size_y/16, size_y/16});
+        this.int_cst.put("LONG_BLOCK_MENU_EDIT", 3*this.array_cst.get("MENU_EDIT_POS")[3]/4);
+        this.array_cst.put("POS_BUTTONS_MENU_EDIT", new int[]{((this.array_cst.get("MENU_EDIT_POS")[3])-this.int_cst.get("LONG_BLOCK_MENU_EDIT"))/2, (this.array_cst.get("MENU_EDIT_POS")[1])+(size_y-(this.array_cst.get("MENU_EDIT_POS"))[1])/2-this.int_cst.get("LONG_BLOCK_MENU_EDIT")/2});
+        this.int_cst.put("GAP_BLOCK_COL_MENU_EDIT", this.array_cst.get("MENU_EDIT_POS")[3]/8);
+        this.int_cst.put("SIZE_CASE", 50);
+        this.int_cst.put("INIT_SIZE_CASE", 50);
+        this.int_cst.put("SIZE_TEXT", 30);
+    }
+    public void set_cst(String name, float val) {
+        this.float_cst.replace(name, val);
     }
     public void set_cst(String name, int val) {
-
+        this.int_cst.replace(name, val);
     }
     public void set_cst(String name, int[] val) {
-
+        this.array_cst.replace(name, val);
     }
-    public void set_cst(String name, Map val) {
-
-    }
-
     public void set_res(String name, int value) {
+        this.res.remove(name);
+        this.res.put(name, value);
+    }
+    public void text(String text, Color color, int[] pos, int size) {
 
     }
-    public void text(String text, int[] color, int[] pos, int size) {
-
-    }
-
     public long time() {
         return new Timestamp(System.currentTimeMillis()).getTime();
     }
