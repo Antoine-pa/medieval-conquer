@@ -11,8 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.medievalconquer.engine.Game;
-import com.mygdx.medievalconquer.engine.tools.Picture;
-import com.mygdx.medievalconquer.engine.tools.Tools;
+import com.mygdx.medievalconquer.engine.utils.Picture;
+import com.mygdx.medievalconquer.engine.utils.Tools;
 
 import java.util.Map;
 
@@ -43,6 +43,7 @@ public class Main extends ApplicationAdapter {
 		ScreenUtils.clear(0, 0, 0, 1);
 		batch.setProjectionMatrix(this.camera.combined);
 		shape.setProjectionMatrix(this.camera.combined);
+		inputs.action();
 		game.display(batch, shape);
 	}
 	
@@ -55,5 +56,6 @@ public class Main extends ApplicationAdapter {
 				texture.getValue().dispose();
 			}
 		}
+		Picture.font.dispose();
 	}
 }

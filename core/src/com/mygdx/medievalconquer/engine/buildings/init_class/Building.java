@@ -1,9 +1,9 @@
 package com.mygdx.medievalconquer.engine.buildings.init_class;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.medievalconquer.engine.tools.Tools;
-import com.mygdx.medievalconquer.engine.tools.Coords;
-import com.mygdx.medievalconquer.engine.tools.Picture;
+import com.mygdx.medievalconquer.engine.utils.Tools;
+import com.mygdx.medievalconquer.engine.utils.Coords;
+import com.mygdx.medievalconquer.engine.utils.Picture;
 
 import com.badlogic.gdx.graphics.Texture;
 
@@ -32,20 +32,18 @@ public class Building {
         this.stock = stock;
         this.layer = layer;
     }
-    public boolean display(SpriteBatch batch, float[] pos, boolean alpha) {
-        if (this.in_window(pos)) {
-            if (alpha) {
-                //
-            }
-            else {
-                int size = this.tools.int_cst.get("SIZE_CASE");
-                Texture texture = Picture.get(this);
-                batch.draw(texture, this.pos.x*size-pos[0]*size, this.pos.y*size-pos[1]*size, this.size[0]*size/2, this.size[1]*size/2, this.size[0]*size, this.size[1]*size, 1, 1, this.angle, 0, 0, texture.getWidth(), texture.getWidth(), false, false);
-            }
+    public void display(SpriteBatch batch, float[] pos, boolean alpha) {
+        if (alpha) {
             //
-            return true;
         }
-        return false;
+        else {
+            int size = this.tools.int_cst.get("SIZE_CASE");
+            Texture texture = Picture.get(this);
+            batch.begin();
+            batch.draw(texture, this.pos.x*size-pos[0]*size, this.pos.y*size-pos[1]*size, this.size[0]*size/2, this.size[1]*size/2, this.size[0]*size, this.size[1]*size, 1, 1, this.angle, 0, 0, texture.getWidth(), texture.getWidth(), false, false);
+            batch.end();
+        }
+        //
     }
     public boolean in_window(float[] pos) {
         return (pos[0] <= this.pos.x && this.pos.x <= this.tools.int_cst.get("size_x")/this.tools.int_cst.get("SIZE_CASE")+pos[0] && pos[1] <= this.pos.y && this.pos.y <= this.tools.int_cst.get("size_y")/this.tools.int_cst.get("SIZE_CASE")+pos[1]);

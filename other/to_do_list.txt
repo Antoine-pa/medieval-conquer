@@ -1,0 +1,1 @@
+modifier la suppression des jonctions car si un bâtiment dans LIST_JUNCTION_BUILDING est supprimé et qu'il est joint par des jonctions, les jonctions ne sont pas supprimées.

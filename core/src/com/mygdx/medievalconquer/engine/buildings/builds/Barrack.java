@@ -1,8 +1,8 @@
 package com.mygdx.medievalconquer.engine.buildings.builds;
 
 import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
-import com.mygdx.medievalconquer.engine.tools.Tools;
-import com.mygdx.medievalconquer.engine.tools.Coords;
+import com.mygdx.medievalconquer.engine.utils.Tools;
+import com.mygdx.medievalconquer.engine.utils.Coords;
 
 import java.util.HashMap;
 public class Barrack extends Building {

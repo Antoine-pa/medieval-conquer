@@ -1,8 +1,8 @@
 package com.mygdx.medievalconquer.engine.buildings.init_class;
 
-import com.mygdx.medievalconquer.engine.tools.Const;
-import com.mygdx.medievalconquer.engine.tools.Tools;
-import com.mygdx.medievalconquer.engine.tools.Coords;
+import com.mygdx.medievalconquer.engine.utils.Const;
+import com.mygdx.medievalconquer.engine.utils.Tools;
+import com.mygdx.medievalconquer.engine.utils.Coords;
 
 import java.util.*;
 
@@ -24,15 +24,15 @@ public class JunctionBuilding extends Building {
         for(Building b : list_build) {
             if (b.pos.x <= this.pos.x && this.pos.x < b.pos.x + b.size[0]) {
                 if (b.pos.y < this.pos.y) {  //positionnement en bas d'une autre jonction
-                    this.t[1] = true;
-                    if (b instanceof JunctionBuilding) {
-                        ((JunctionBuilding) b).t[3] = true;
-                    }
-                }
-                else if (b.pos.y > this.pos.y) { //positionnement en haut d'une autre jonction
                     this.t[3] = true;
                     if (b instanceof JunctionBuilding) {
                         ((JunctionBuilding) b).t[1] = true;
+                    }
+                }
+                else if (b.pos.y > this.pos.y) { //positionnement en haut d'une autre jonction
+                    this.t[1] = true;
+                    if (b instanceof JunctionBuilding) {
+                        ((JunctionBuilding) b).t[3] = true;
                     }
                 }
             }
@@ -63,16 +63,16 @@ public class JunctionBuilding extends Building {
         for(Building b : list_build) {
             if (b instanceof JunctionBuilding) {
                 if (b.pos.x == this.pos.x && b.pos.y  < this.pos.y){ //positionnement en bas d'une autre jonction
-                    ((JunctionBuilding) b).t[3] = true;
+                    ((JunctionBuilding) b).t[1] = false;
                 }
                 else if (b.pos.x == this.pos.x && b.pos.y  > this.pos.y){ //positionnement en haut d'une autre jonction
-                    ((JunctionBuilding) b).t[1] = true;
+                    ((JunctionBuilding) b).t[3] = false;
                 }
                 else if (b.pos.x > this.pos.x && b.pos.y == this.pos.y){ //positionnement à gauche d'une autre jonction
-                    ((JunctionBuilding) b).t[2] = true;
+                    ((JunctionBuilding) b).t[2] = false;
                 }
                 else if (b.pos.x < this.pos.x && b.pos.y  == this.pos.y){ //positionnement à droite d'une autre jonction
-                    ((JunctionBuilding) b).t[0] = true;
+                    ((JunctionBuilding) b).t[0] = false;
                 }
             }
         }
@@ -135,23 +135,18 @@ public class JunctionBuilding extends Building {
                 s++;
             }
         }
-        System.out.println(s);
         if (s == 1){
-            this.angle = Arrays.asList(this.t).indexOf(true)*90;
-        }
-        else if (s == 3) {
-            this.angle = Arrays.asList(this.t).indexOf(false)*90;
-        }
-        else if (s == 2) {
-            if (this.t[0] == this.t[2] && this.t[1] == this.t[3]) {
-                this.angle = Arrays.asList(this.t).indexOf(true)*90;
-            }
-            else {
-                if (this.t[0] == this.t[3] == true) {
+            this.angle = Tools.index(this.t, true)*90;
+        } else if (s == 3) {
+            this.angle = Tools.index(this.t, false)*90;
+        } else if (s == 2) {
+            if (this.t[0] == this.t[2] & this.t[1] == this.t[3]) {
+                this.angle = Tools.index(this.t, true)*90;
+            } else {
+                if (this.t[0] == this.t[3] & this.t[3] == true) {
                     this.angle = 270;
-                }
-                else {
-                    this.angle = Arrays.asList(this.t).indexOf(true)*90;
+                } else {
+                    this.angle = Tools.index(this.t, true)*90;
                 }
             }
         }

@@ -3,14 +3,11 @@ package com.mygdx.medievalconquer.engine.layout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
-import com.mygdx.medievalconquer.engine.tools.BuildingFactory;
+import com.mygdx.medievalconquer.engine.utils.*;
 import com.mygdx.medievalconquer.engine.buildings.init_class.Building;
 import com.mygdx.medievalconquer.engine.buildings.init_class.JunctionBuilding;
 import com.mygdx.medievalconquer.engine.buildings.init_class.ProductionBuilding;
 import com.mygdx.medievalconquer.engine.buildings.init_class.ResourceTransportation;
-import com.mygdx.medievalconquer.engine.tools.Colors;
-import com.mygdx.medievalconquer.engine.tools.Tools;
-import com.mygdx.medievalconquer.engine.tools.Coords;
 
 import java.util.*;
 
@@ -40,9 +37,6 @@ public class Layout {
         this.dict_pos_build.put("0", new HashMap<>());
         this.dict_pos_build.put("-1", new HashMap<>());
         this.load_layout();
-        //Building b = BuildingFactory.createBuilding("Barrack", tools, new Coords(505, 505));
-        //this.add_build(b);
-        //this.add_build(new Building(this.tools, "Barrack", new int[]{1, 1}, new int[]{0, 1}, 0, 1, 100, "defense", new HashMap<>(), "0"));
     }
     public void add_build(Building build) {
         this.list_build.get(build.layer).add(build);
@@ -88,17 +82,16 @@ public class Layout {
             color1 = Colors.black;
             color2 = Colors.white;
         }
-        this.tools.fill(color1);
+        Graphics.fill(color1);
         shape.begin(ShapeRenderer.ShapeType.Line);
         shape.setColor(color2);
-        for(float x = 0; x<=this.tools.int_cst.get("size_x")+ this.tools.int_cst.get("SIZE_CASE"); x = x+this.tools.int_cst.get("SIZE_CASE")) {
+        for(float x = 0; x<=this.tools.int_cst.get("size_x") + this.tools.int_cst.get("SIZE_CASE"); x = x+this.tools.int_cst.get("SIZE_CASE")) {
             shape.line(x-this.pos[0]%1* tools.int_cst.get("SIZE_CASE"), 0, x-this.pos[0]%1* tools.int_cst.get("SIZE_CASE"), tools.int_cst.get("size_y"));
             for(float y = 0; y<=this.tools.int_cst.get("size_y")+ this.tools.int_cst.get("SIZE_CASE"); y = y+this.tools.int_cst.get("SIZE_CASE")) {
                 shape.line(0, y-this.pos[1]%1* tools.int_cst.get("SIZE_CASE"), tools.int_cst.get("size_x"), y-this.pos[1]%1* tools.int_cst.get("SIZE_CASE"));
             }
         }
         shape.end();
-        batch.begin();
         if (this.alpha & this.layer == "-1") {
             for(int y = (int) this.pos[1]-10; y < this.pos[1] + this.tools.int_cst.get("size_y")/this.tools.int_cst.get("SIZE_CASE"); y++) {
                 for(int x = (int) this.pos[0]-10; x < this.pos[0] + this.tools.int_cst.get("size_x")/this.tools.int_cst.get("SIZE_CASE"); x++) {
@@ -123,7 +116,6 @@ public class Layout {
             }
         }
         builds.clear();
-        batch.end();
         //suite
     }
 
@@ -135,7 +127,7 @@ public class Layout {
     }
 
     public void load_layout () {
-        Map<String, ArrayList<Map>> lyt = (Map) this.tools.layout.toMap();
+        Map<String, ArrayList<Map>> lyt = (Map) this.tools.layout;
         for(Map.Entry<String, ArrayList<Map>> l : lyt.entrySet()) {
             for(int i = 0; i < l.getValue().size(); i++) {
                 Map build = (Map) l.getValue().get(i);
